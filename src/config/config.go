@@ -17,7 +17,7 @@ type Config struct {
 	Apps  []App
 }
 
-func load() Config {
+func Load() Config {
 	config := Config{}
 
 	file, err := ioutil.ReadFile("../conf/config.yaml")

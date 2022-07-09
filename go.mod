@@ -1,4 +1,4 @@
-module github.com/cubismod/fly-img-updater
+module github.com/cubismod/fly-image-updater
 
 go 1.18
 
