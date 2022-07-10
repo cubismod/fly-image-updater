@@ -4,23 +4,29 @@ import (
 	"io/ioutil"
 	"log"
 
+	"github.com/sirupsen/logrus"
 	"gopkg.in/yaml.v3"
 )
 
 type App struct {
-	Git  string `yaml:"git,omitempty"`
+	GitRepo  string `yaml:"git,omitempty"`
+	Path string `yaml:"path,omitempty"`
 	Name string
 }
 
+// Go representation of our YAML configuration file
 type Config struct {
-	Token string
-	Apps  []App
+	FlyToken    string `yaml:"fly_token"`
+	GotifyToken string `yaml:"gotify_token"`
+	GotifyUrl   string `yaml:"gotify_url"`
+	Apps        []App  `yaml:"apps"`
+	StaggerSecs int    `yaml:"stagger_secs"`
 }
 
 func Load() Config {
 	config := Config{}
 
-	file, err := ioutil.ReadFile("../conf/config.yaml")
+	file, err := ioutil.ReadFile("./conf/config.yaml")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -29,6 +35,8 @@ func Load() Config {
 	if yamlErr != nil {
 		log.Fatal(err)
 	}
+
+	logrus.Info("loaded YAML configuration")
 
 	return config
 }
